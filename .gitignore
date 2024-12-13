@@ -393,6 +393,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
-
+# Virtual environment
+venv/
 # JetBrains Rider
 *.sln.iml
