@@ -1,4 +1,4 @@
-from constraint import Problem
+from constraint import *
 
 def leer_datos_archivo(ruta_archivo):
     """Lee los datos del archivo de entrada y los estructura."""
