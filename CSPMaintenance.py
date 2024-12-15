@@ -34,7 +34,7 @@ def leer_datos(archivo):
 def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, limite_soluciones=None):
     
     problem = Problem()
-    # Generar dominio completo
+    # Generar dominio
     dominio = talleres_std + talleres_spc + parkings
 
     # Crear variables para cada avión y cada franja horaria
@@ -42,7 +42,7 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
         for franja in range(franjas):
             problem.addVariable(f"{avion['id']}_f{franja}", dominio)
 
-    # Restricciones (se mantienen igual)
+    # Restricciones
     def capacidad_taller(*asignaciones):
         ocupaciones = {}
         for pos in asignaciones:
@@ -98,40 +98,14 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
                 t1_var = f"{avion['id']}_f{franja + 1}"
                 problem.addConstraint(orden_tareas, (t2_var, t1_var))
 
-    # Resolver el problema
-    soluciones = problem.getSolutions()
-
-    # Filtrar soluciones que violan las restricciones
-    soluciones_filtradas = []
-    for solucion in soluciones:
-        for franja in range(franjas):
-            ocupaciones = {}
-            for avion in aviones:
-                pos = solucion[f"{avion['id']}_f{franja}"]
-                if pos not in ocupaciones:
-                    ocupaciones[pos] = 0
-                ocupaciones[pos] += 1
-            if any(count > 2 for count in ocupaciones.values()):
-                break
-        else:
-            for franja in range(franjas):
-                posiciones = [solucion[f"{avion['id']}_f{franja}"] for avion in aviones]
-                ocupadas = set(posiciones)
-                for pos in ocupadas:
-                    x, y = pos
-                    adyacentes = {(x + dx, y + dy) for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]}
-                    if any(adj in ocupadas for adj in adyacentes):
-                        break
-                else:
-                    continue
-                break
-            else:
-                soluciones_filtradas.append(solucion)
-
-        if limite_soluciones and len(soluciones_filtradas) >= limite_soluciones:
+    # Límite de soluciones
+    soluciones = []
+    for solucion in problem.getSolutionIter():
+        soluciones.append(solucion)
+        if limite_soluciones and len(soluciones) >= limite_soluciones:
             break
 
-    return soluciones_filtradas
+    return soluciones
 
 
 def guardar_resultados(archivo_salida, soluciones):
@@ -148,7 +122,7 @@ if __name__ == "__main__":
 
     # Leer datos y resolver el problema
     franjas, matriz_tamaño, talleres_std, talleres_spc, parkings, aviones = leer_datos(archivo_entrada)
-    soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones)
+    soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, 200)
     guardar_resultados(archivo_salida, soluciones)
 
     print(f"Resultados guardados en {archivo_salida}")
