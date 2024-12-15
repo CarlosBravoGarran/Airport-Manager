@@ -6,7 +6,7 @@ def leer_datos(archivo):
         lineas = [linea.strip() for linea in f.readlines()]
 
     # Número de franjas horarias
-    franjas = int(lineas[0])
+    franjas = int(lineas[0].split(":")[1].strip())
 
     # Tamaño de la matriz
     matriz_tamaño = lineas[1]
