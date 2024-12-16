@@ -41,10 +41,9 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
 
     # Crear variables para cada avión y cada franja horaria
     for avion in aviones:
-        for franja in range(0, min(avion["t2"] + 1, franjas)):
+        for franja in range(0, franjas):
             clave = f"{avion['id']}_f{franja}"
             problem.addVariable(clave, dominio)
-            print(clave, dominio)
 
     # Restricciones
     def capacidad_taller(*asignaciones):
@@ -109,6 +108,7 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
     soluciones = []
     for solucion in problem.getSolutionIter():
         soluciones.append(solucion)
+        print(solucion)
         if limite_soluciones and len(soluciones) >= limite_soluciones:
             break
     return soluciones

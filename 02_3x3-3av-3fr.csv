@@ -1,0 +1,401 @@
+N. Sol: 100
+Solución 1:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 2:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 3:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 4:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 5:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 6:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 7:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 8:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 9:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 10:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 11:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 12:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 13:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 14:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 15:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 16:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 17:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 18:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 19:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 20:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 21:
+A1-JMB-T-2-1: STD(0, 0), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 22:
+A1-JMB-T-2-1: STD(0, 0), SPC(1, 1), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 23:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 24:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 25:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 26:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 27:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 28:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 29:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 30:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 31:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 32:
+A1-JMB-T-2-1: STD(0, 0), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 33:
+A1-JMB-T-2-1: STD(0, 0), STD(0, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 34:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 35:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 36:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 37:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 38:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 39:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 40:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 41:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 42:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 43:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 44:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 45:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 46:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 47:
+A1-JMB-T-2-1: PRK(2, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 48:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 49:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 50:
+A1-JMB-T-2-1: SPC(0, 1), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 51:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 52:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 53:
+A1-JMB-T-2-1: STD(1, 0), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 54:
+A1-JMB-T-2-1: STD(0, 0), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 55:
+A1-JMB-T-2-1: STD(0, 0), SPC(1, 1), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 56:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 57:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 58:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 59:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 60:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 61:
+A1-JMB-T-2-1: SPC(0, 1), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 62:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 63:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 64:
+A1-JMB-T-2-1: STD(1, 0), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 65:
+A1-JMB-T-2-1: STD(0, 0), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 66:
+A1-JMB-T-2-1: STD(0, 0), STD(0, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+Solución 67:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 68:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 69:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 70:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 71:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 72:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 73:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 74:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 75:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 76:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 77:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), SPC(1, 1)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 78:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 79:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 80:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 81:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 82:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 83:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 84:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 85:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 86:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 87:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 88:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), PRK(2, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 89:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 90:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 91:
+A1-JMB-T-2-1: PRK(2, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 92:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 93:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 94:
+A1-JMB-T-2-1: SPC(0, 1), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 95:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 96:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 97:
+A1-JMB-T-2-1: STD(1, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(1, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 98:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: STD(0, 0), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 99:
+A1-JMB-T-2-1: STD(0, 0), PRK(2, 0), STD(0, 0)
+A2-STD-T-1-2: PRK(2, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
+Solución 100:
+A1-JMB-T-2-1: PRK(2, 1), STD(0, 0), SPC(1, 1)
+A2-STD-T-1-2: SPC(0, 1), SPC(1, 1), SPC(1, 1)
+A3-STD-F-0-3: PRK(2, 1), SPC(1, 1), PRK(2, 0)
