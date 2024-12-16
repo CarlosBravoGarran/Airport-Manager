@@ -80,6 +80,11 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
                 return False
         return True
 
+    def restriccion_parking(solucion, tareas, franjas):
+        # Limitar el uso de parkings a la diferencia entre franjas y tareas
+        max_parkings = franjas - tareas
+        return sum(1 for pos in solucion if pos in parkings) <= max_parkings
+
     # Aplicar restricciones a cada franja horaria
     for franja in range(franjas):
         variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones if f"{avion['id']}_f{franja}" in problem._variables]
@@ -103,6 +108,12 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
                 if t2_var in problem._variables and t1_var in problem._variables:
                     problem.addConstraint(orden_tareas, (t2_var, t1_var))
 
+        # Aplicar la restricción del uso de parkings
+        franjas_avion = [f"{avion['id']}_f{franja}" for franja in range(avion["t1"], avion["t2"] + 1)]
+        problem.addConstraint(
+            lambda *asignaciones, tareas=avion["t2"] - avion["t1"] + 1: restriccion_parking(asignaciones, tareas, franjas),
+            franjas_avion
+        )
 
     # Límite de soluciones
     soluciones = []
