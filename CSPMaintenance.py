@@ -41,8 +41,10 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
 
     # Crear variables para cada avión y cada franja horaria
     for avion in aviones:
-        for franja in range(franjas):
-            problem.addVariable(f"{avion['id']}_f{franja}", dominio)
+        for franja in range(0, min(avion["t2"] + 1, franjas)):
+            clave = f"{avion['id']}_f{franja}"
+            problem.addVariable(clave, dominio)
+            print(clave, dominio)
 
     # Restricciones
     def capacidad_taller(*asignaciones):
@@ -81,24 +83,27 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
 
     # Aplicar restricciones a cada franja horaria
     for franja in range(franjas):
-        variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones]
-        problem.addConstraint(capacidad_taller, variables_franja)
-        problem.addConstraint(maniobrabilidad, variables_franja)
+        variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones if f"{avion['id']}_f{franja}" in problem._variables]
+        if variables_franja:
+            problem.addConstraint(capacidad_taller, variables_franja)
+            problem.addConstraint(maniobrabilidad, variables_franja)
 
-        variables_jmb = [f"{avion['id']}_f{franja}" for avion in aviones if avion["tipo"] == "JMB"]
+        variables_jmb = [f"{avion['id']}_f{franja}" for avion in aviones if avion["tipo"] == "JMB" and f"{avion['id']}_f{franja}" in problem._variables]
         if variables_jmb:
             problem.addConstraint(maximo_un_jmb, variables_jmb)
 
     for avion in aviones:
         problem.addConstraint(
             lambda *asignaciones, t2=avion["t2"]: compatibilidad_tareas(asignaciones, t2),
-            [f"{avion['id']}_f{franja}" for franja in range(franjas)]
+            [f"{avion['id']}_f{franja}" for franja in range(avion["t1"], min(avion["t2"] + 1, franjas))]
         )
         if avion["restr"]:
-            for franja in range(franjas - 1):
+            for franja in range(avion["t1"], min(avion["t2"], franjas - 1)):
                 t2_var = f"{avion['id']}_f{franja}"
                 t1_var = f"{avion['id']}_f{franja + 1}"
-                problem.addConstraint(orden_tareas, (t2_var, t1_var))
+                if t2_var in problem._variables and t1_var in problem._variables:
+                    problem.addConstraint(orden_tareas, (t2_var, t1_var))
+
 
     # Límite de soluciones
     soluciones = []
@@ -106,11 +111,9 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
         soluciones.append(solucion)
         if limite_soluciones and len(soluciones) >= limite_soluciones:
             break
-
     return soluciones
 
 def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings):
-
     def formatear_posicion(pos):
         if pos in talleres_std:
             return f"STD{pos}"
@@ -121,26 +124,24 @@ def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, taller
         else:
             raise ValueError(f"Posición no válida: {pos}")
 
-    # Número aleatorio de soluciones (al menos 1)
+    # Seleccionar un número aleatorio de soluciones a guardar (al menos 1)
     num_soluciones = random.randint(1, len(soluciones))
     soluciones_a_guardar = random.sample(soluciones, num_soluciones)
 
     with open(archivo_salida, 'w') as f:
-        # Total de soluciones generadas
+        # Escribir el número total de soluciones generadas
         f.write(f"N. Sol: {len(soluciones)}\n")
         
-        # Escribir las soluciones seleccionadas
-        for i, solucion in enumerate(soluciones_a_guardar):
-            f.write(f"Solución {i + 1}:\n")
+        for solucion in soluciones:
+            index = soluciones.index(solucion)
+            f.write(f"Solución {index+1}:\n")
             for avion in aviones:
-                # Obtener las posiciones en las franjas horarias correspondientes
-                posiciones = [
-                    formatear_posicion(solucion[f"{avion['id']}_f{franja}"])
-                    for franja in range(avion["t1"], avion["t2"] + 1)
-                ]
-                # Escribir las posiciones con el formato correcto
+                posiciones = []
+                for franja in range(franjas):
+                    clave = f"{avion['id']}_f{franja}"
+                    if clave in solucion:
+                        posiciones.append(formatear_posicion(solucion[clave]))
                 f.write(f"{avion['id']}-{avion['tipo']}-{'T' if avion['restr'] else 'F'}-{avion['t1']}-{avion['t2']}: {', '.join(posiciones)}\n")
-
 
 if __name__ == "__main__":
     archivo_entrada = sys.argv[1]
