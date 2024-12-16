@@ -1,4 +1,6 @@
 import sys
+import os
+import random
 from constraint import Problem
 
 def leer_datos(archivo):
@@ -107,22 +109,49 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
 
     return soluciones
 
+def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings):
 
-def guardar_resultados(archivo_salida, soluciones):
+    def formatear_posicion(pos):
+        if pos in talleres_std:
+            return f"STD{pos}"
+        elif pos in talleres_spc:
+            return f"SPC{pos}"
+        elif pos in parkings:
+            return f"PRK{pos}"
+        else:
+            raise ValueError(f"Posición no válida: {pos}")
+
+    # Número aleatorio de soluciones (al menos 1)
+    num_soluciones = random.randint(1, len(soluciones))
+    soluciones_a_guardar = random.sample(soluciones, num_soluciones)
+
     with open(archivo_salida, 'w') as f:
+        # Total de soluciones generadas
         f.write(f"N. Sol: {len(soluciones)}\n")
-        for i, solucion in enumerate(soluciones):
+        
+        # Escribir las soluciones seleccionadas
+        for i, solucion in enumerate(soluciones_a_guardar):
             f.write(f"Solución {i + 1}:\n")
-            for avion, asignaciones in solucion.items():
-                f.write(f"{avion}: {asignaciones}\n")
+            for avion in aviones:
+                # Obtener las posiciones en las franjas horarias correspondientes
+                posiciones = [
+                    formatear_posicion(solucion[f"{avion['id']}_f{franja}"])
+                    for franja in range(avion["t1"], avion["t2"] + 1)
+                ]
+                # Escribir las posiciones con el formato correcto
+                f.write(f"{avion['id']}-{avion['tipo']}-{'T' if avion['restr'] else 'F'}-{avion['t1']}-{avion['t2']}: {', '.join(posiciones)}\n")
+
 
 if __name__ == "__main__":
     archivo_entrada = sys.argv[1]
-    archivo_salida = "solution.csv"
+
+    # Crear el nombre del archivo de salida basado en el archivo de entrada
+    base_name = os.path.splitext(os.path.basename(archivo_entrada))[0]
+    archivo_salida = f"{base_name}.csv"
 
     # Leer datos y resolver el problema
     franjas, matriz_tamaño, talleres_std, talleres_spc, parkings, aviones = leer_datos(archivo_entrada)
-    soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, 200)
-    guardar_resultados(archivo_salida, soluciones)
+    soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, 100)
+    guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings)
 
     print(f"Resultados guardados en {archivo_salida}")
