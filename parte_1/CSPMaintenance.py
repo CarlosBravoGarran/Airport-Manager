@@ -178,7 +178,7 @@ if __name__ == "__main__":
     base_name = os.path.splitext(os.path.basename(archivo_entrada))[0]
     
     # Ruta del directorio de soluciones
-    solutions_dir = "solutions"
+    solutions_dir = "CSP-solutions"
     if not os.path.exists(solutions_dir):
         os.makedirs(solutions_dir)  # Crear el directorio si no existe
 
@@ -192,7 +192,7 @@ if __name__ == "__main__":
         guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings)
 
         print(f"Resultados guardados en {archivo_salida}")
-        
+
     # Gestión de errores
     except ValueError as e:
         print(e)
