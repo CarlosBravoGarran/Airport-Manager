@@ -36,8 +36,15 @@ def leer_datos(archivo):
 def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, limite_soluciones=None):
     
     problem = Problem()
+
     # Generar dominio
     dominio = talleres_std + talleres_spc + parkings
+
+    # Comprobar que no hay más tareas que franjas
+    for avion in aviones:
+        total_tareas = avion["t1"] + avion["t2"]
+        if total_tareas > franjas:
+            raise ValueError(f"El avión {avion['id']} tiene más tareas ({total_tareas}) que franjas disponibles ({franjas}).")
 
     # Crear variables para cada avión y cada franja horaria
     for avion in aviones:
@@ -45,74 +52,82 @@ def resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, li
             clave = f"{avion['id']}_f{franja}"
             problem.addVariable(clave, dominio)
 
-    # Restricciones
+    # Restricción: Máximo de aviones por taller
     def capacidad_taller(*asignaciones):
         ocupaciones = {}
-        for pos in asignaciones:
-            if pos not in ocupaciones:
-                ocupaciones[pos] = 0
-            ocupaciones[pos] += 1
-        return all(count <= 2 for count in ocupaciones.values())
+        for avion, asignacion in zip(aviones, asignaciones):
+            if asignacion not in ocupaciones:
+                ocupaciones[asignacion] = {"JMB": 0, "STD": 0}
+            if avion["tipo"] == "JMB":
+                ocupaciones[asignacion]["JMB"] += 1
+            else:
+                ocupaciones[asignacion]["STD"] += 1
 
-    def maximo_un_jmb(*asignaciones):
-        ocupaciones = {}
-        for pos in asignaciones:
-            if pos not in ocupaciones:
-                ocupaciones[pos] = 0
-            ocupaciones[pos] += 1
-        return all(count <= 1 for count in ocupaciones.values())
-    
-    def compatibilidad_tareas(asignaciones, tareas_tipo2):
-        talleres_visitados = set(asignaciones)
-        if tareas_tipo2 > 0:
-            return any(taller in talleres_spc for taller in talleres_visitados)
-        return True
-
-    def orden_tareas(t2, t1):
-        return t2 in talleres_spc and t1 in (talleres_spc + list(talleres_std))
-    
-    def restriccion_parking(asignaciones, tareas, total_franjas):
-        total_parkings = sum(1 for pos in asignaciones if pos in parkings)
-        print("Total", total_parkings)
-        max_parkings = total_franjas - tareas
-        print("Max", max_parkings)
-        if tareas == total_franjas:
-            return total_parkings == 0
-        return total_parkings <= max_parkings
-
-    def maniobrabilidad(*asignaciones):
-        ocupadas = set(asignaciones)
-        for pos in ocupadas:
-            x, y = pos
-            adyacentes = {(x + dx, y + dy) for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]}
-            if any(adj in ocupadas for adj in adyacentes):
+        for cuenta in ocupaciones.values():
+            if cuenta["JMB"] > 1 or (cuenta["JMB"] == 1 and cuenta["STD"] > 0):
+                return False
+            if cuenta["STD"] > 2:
                 return False
         return True
 
-    # Aplicar restricciones a cada franja horaria
-    for franja in range(franjas):
-        variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones if f"{avion['id']}_f{franja}" in problem._variables]
-        if variables_franja:
-            problem.addConstraint(capacidad_taller, variables_franja)
-            problem.addConstraint(maniobrabilidad, variables_franja)
 
-        variables_jmb = [f"{avion['id']}_f{franja}" for avion in aviones if avion["tipo"] == "JMB" and f"{avion['id']}_f{franja}" in problem._variables]
-        if variables_jmb:
-            problem.addConstraint(maximo_un_jmb, variables_jmb)
+    for franja in range(franjas):
+        variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones]
+        problem.addConstraint(capacidad_taller, variables_franja)
+
+    # Restricción: Tareas especialistas en talleres especialistas
+    def tareas_especialistas(*asignaciones):
+        return all(asignacion in talleres_spc for asignacion in asignaciones)
 
     for avion in aviones:
-        variables_avion = [f"{avion['id']}_f{franja}" for franja in range(avion["t1"], min(avion["t2"] + 1, franjas))]
-        problem.addConstraint(
-            lambda *asignaciones, t2=avion["t2"]: compatibilidad_tareas(asignaciones, t2),
-            variables_avion
-        )
+        if avion["t2"] > 0:
+            variables_t2 = [f"{avion['id']}_f{franja}" for franja in range(avion["t2"])]
+            problem.addConstraint(tareas_especialistas, variables_t2)
 
-        if avion["restr"]:
-            for franja in range(avion["t1"], min(avion["t2"], franjas - 1)):
-                t2_var = f"{avion['id']}_f{franja}"
-                t1_var = f"{avion['id']}_f{franja + 1}"
-                if t2_var in problem._variables and t1_var in problem._variables:
-                    problem.addConstraint(orden_tareas, (t2_var, t1_var))
+    # Restricción: Orden de tareas especialistas antes de estándar
+    def orden_tareas(*asignaciones):
+        franjas_spc = [i for i, asignacion in enumerate(asignaciones) if asignacion in talleres_spc]
+        franjas_std = [i for i, asignacion in enumerate(asignaciones) if asignacion in talleres_std]
+        if franjas_spc and franjas_std:
+            return max(franjas_spc) < min(franjas_std)
+        return True
+
+    for avion in aviones:
+        if avion["t2"] > 0 and avion["t1"] > 0 and avion["restr"]:
+            variables_avion = [f"{avion['id']}_f{franja}" for franja in range(franjas)]
+            problem.addConstraint(orden_tareas, variables_avion)
+
+    # Restricción: Maniobrabilidad de los aviones
+    def maniobrabilidad(*asignaciones):
+        ocupadas = set(asignaciones)
+        for pos in ocupadas:
+            adyacentes = {(pos[0] + dx, pos[1] + dy) for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]}
+            if all(adj in ocupadas for adj in adyacentes):
+                return False
+        return True
+
+
+    for franja in range(franjas):
+        variables_franja = [f"{avion['id']}_f{franja}" for avion in aviones]
+        problem.addConstraint(maniobrabilidad, variables_franja)
+
+    # Restricción: Separación de JUMBOS
+    def separacion_jumbos(*asignaciones):
+        jumbo_positions = [
+            asignacion for avion, asignacion in zip(aviones, asignaciones) if avion["tipo"] == "JMB"
+        ]
+        jumbo_positions_set = set(jumbo_positions)
+        for pos in jumbo_positions:
+            adyacentes = [(pos[0] + dx, pos[1] + dy) for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]]
+            if any(adj in jumbo_positions_set for adj in adyacentes):
+                return False
+        return True
+
+    # Seleccionar variables solo de aviones JUMBOS
+    jumbo_variables = [
+        f"{avion['id']}_f{franja}" for avion in aviones if avion["tipo"] == "JMB" for franja in range(franjas)
+    ]
+    problem.addConstraint(separacion_jumbos, jumbo_variables)
 
 
     # Límite de soluciones
@@ -140,6 +155,7 @@ def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, taller
     soluciones_a_guardar = random.sample(soluciones, num_soluciones)
 
     with open(archivo_salida, 'w') as f:
+
         # Escribir el número total de soluciones generadas
         f.write(f"N. Sol: {len(soluciones)}\n")
         
@@ -154,16 +170,29 @@ def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, taller
                         posiciones.append(formatear_posicion(solucion[clave]))
                 f.write(f"{avion['id']}-{avion['tipo']}-{'T' if avion['restr'] else 'F'}-{avion['t1']}-{avion['t2']}: {', '.join(posiciones)}\n")
 
+
 if __name__ == "__main__":
     archivo_entrada = sys.argv[1]
 
     # Crear el nombre del archivo de salida basado en el archivo de entrada
     base_name = os.path.splitext(os.path.basename(archivo_entrada))[0]
-    archivo_salida = f"{base_name}.csv"
+    
+    # Ruta del directorio de soluciones
+    solutions_dir = "solutions"
+    if not os.path.exists(solutions_dir):
+        os.makedirs(solutions_dir)  # Crear el directorio si no existe
 
-    # Leer datos y resolver el problema
-    franjas, matriz_tamaño, talleres_std, talleres_spc, parkings, aviones = leer_datos(archivo_entrada)
-    soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, 100)
-    guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings)
+    # Archivo de salida dentro del directorio solutions
+    archivo_salida = os.path.join(solutions_dir, f"{base_name}.csv")
 
-    print(f"Resultados guardados en {archivo_salida}")
+    try:
+        # Leer datos y resolver el problema
+        franjas, matriz_tamaño, talleres_std, talleres_spc, parkings, aviones = leer_datos(archivo_entrada)
+        soluciones = resolver_problema(franjas, talleres_std, talleres_spc, parkings, aviones, None)
+        guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, talleres_spc, parkings)
+
+        print(f"Resultados guardados en {archivo_salida}")
+        
+    # Gestión de errores
+    except ValueError as e:
+        print(e)
