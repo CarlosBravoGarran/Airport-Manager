@@ -1,0 +1,16 @@
+5
+(0,0) (9,9)
+(9,0) (0,9)
+(0,9) (4,0)
+(9,9) (5,3)
+(4,4) (5,5)
+B;G;B;A;B;G;B;G;G;B
+A;B;B;G;G;G;G;G;G;A
+G;G;B;G;G;B;G;B;A;A
+G;G;B;B;G;B;B;B;A;G
+B;A;A;A;B;A;G;G;G;G
+B;G;G;B;B;B;B;B;G;G
+B;G;G;G;G;A;G;G;G;G
+A;B;B;G;B;A;G;G;G;G
+G;A;B;B;A;A;B;G;G;G
+B;B;G;A;G;A;B;B;B;B

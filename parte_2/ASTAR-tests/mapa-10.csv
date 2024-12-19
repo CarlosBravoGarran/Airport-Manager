@@ -1,16 +1,8 @@
-5
-(0,0) (9,9)
-(9,0) (0,9)
-(0,9) (9,0)
-(9,9) (0,0)
-(4,4) (5,5)
-B;G;B;G;B;G;B;G;G;B
-G;G;G;G;G;G;G;G;G;G
-G;G;B;G;G;G;G;B;G;G
-G;G;G;G;G;G;G;G;G;G
-G;G;G;G;B;G;G;G;G;G
-B;G;G;B;B;B;B;G;G;G
-B;G;G;G;G;G;G;G;G;G
-G;B;B;G;B;G;G;G;G;G
-G;G;G;G;G;G;G;G;G;G
-B;G;G;G;G;G;B;G;G;B
+2
+(0,0) (4,4)
+(4,0) (0,4)
+G;G;G;G;G
+G;B;G;B;G
+G;G;G;G;G
+G;B;G;B;G
+G;G;G;G;G
