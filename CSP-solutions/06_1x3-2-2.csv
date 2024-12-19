@@ -1,0 +1,19 @@
+N. Sol: 6
+Solución 4:
+1-JMB-F-1-0: STD(0, 0), STD(0, 0)
+2-JMB-T-1-1: SPC(0, 2), SPC(0, 2)
+Solución 3:
+1-JMB-F-1-0: PRK(0, 1), PRK(0, 1)
+2-JMB-T-1-1: SPC(0, 2), SPC(0, 2)
+Solución 2:
+1-JMB-F-1-0: STD(0, 0), STD(0, 0)
+2-JMB-T-1-1: SPC(0, 2), PRK(0, 1)
+Solución 5:
+1-JMB-F-1-0: PRK(0, 1), PRK(0, 1)
+2-JMB-T-1-1: SPC(0, 2), STD(0, 0)
+Solución 1:
+1-JMB-F-1-0: STD(0, 0), SPC(0, 2)
+2-JMB-T-1-1: SPC(0, 2), PRK(0, 1)
+Solución 6:
+1-JMB-F-1-0: STD(0, 0), SPC(0, 2)
+2-JMB-T-1-1: SPC(0, 2), STD(0, 0)

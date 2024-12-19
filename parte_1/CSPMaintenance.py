@@ -150,16 +150,17 @@ def guardar_resultados(archivo_salida, soluciones, aviones, talleres_std, taller
             raise ValueError(f"Posición no válida: {pos}")
 
     # Seleccionar un número aleatorio de soluciones a guardar (al menos 1)
-    # num_soluciones = random.randint(1, len(soluciones))
-    num_soluciones = len(soluciones)
-    soluciones_a_guardar = random.sample(soluciones, num_soluciones)
+    if soluciones:
+        num_soluciones = random.randint(1, len(soluciones))
+        soluciones_a_guardar = soluciones[:num_soluciones]  # Seleccionar las primeras `num_soluciones`
+    else:
+        soluciones_a_guardar = []
 
     with open(archivo_salida, 'w') as f:
-
         # Escribir el número total de soluciones generadas
         f.write(f"N. Sol: {len(soluciones)}\n")
-        
-        for solucion in soluciones:
+
+        for solucion in soluciones_a_guardar:
             index = soluciones.index(solucion)
             f.write(f"Solución {index+1}:\n")
             for avion in aviones:
@@ -177,13 +178,8 @@ if __name__ == "__main__":
     # Crear el nombre del archivo de salida basado en el archivo de entrada
     base_name = os.path.splitext(os.path.basename(archivo_entrada))[0]
     
-    # Ruta del directorio de soluciones
-    solutions_dir = "CSP-solutions"
-    if not os.path.exists(solutions_dir):
-        os.makedirs(solutions_dir)  # Crear el directorio si no existe
-
-    # Archivo de salida dentro del directorio solutions
-    archivo_salida = os.path.join(solutions_dir, f"{base_name}.csv")
+    # Archivo de salida dentro del mismo directorio de entrada
+    archivo_salida = f"{os.path.dirname(archivo_entrada)}/{base_name}.csv"
 
     try:
         # Leer datos y resolver el problema
