@@ -1,148 +1,155 @@
 import heapq
-import time
 import sys
+import os
+import time
 from itertools import product
 
-def leer_mapa(archivo = sys.argv[1]):
-    # Leer archivo mapa.csv y devolver mapa, posiciones iniciales y destinos
-    with open (archivo, 'r') as file:
-        lineas = file.readlines()
+def leer_mapa(archivo):
+    with open(archivo, 'r') as f:
+        lineas = f.readlines()
 
-    n_aviones = int(lineas[0].strip())
+    num_aviones = int(lineas[0].strip())
     posiciones_iniciales = []
-    posiciones_finales = []
-    
-    for i in range(1, n_aviones + 1):
-        inicial, objetivo = lineas[i].strip().split()
-        x_inicial, y_inicial = map(int, inicial.strip("()").split(","))
-        x_objetivo, y_objetivo = map(int, objetivo.strip("()").split(","))
-        posiciones_iniciales.append((x_inicial, y_inicial))
-        posiciones_finales.append((x_objetivo, y_objetivo))
-    
-    mapa = []
-    for linea in lineas[n_aviones + 1:]:
-        fila = linea.strip().split(";")
-        mapa.append(fila)
-    
-    return mapa, posiciones_iniciales, posiciones_finales
-    
+    posiciones_objetivo = []
 
-def generar_sucesores(estado, mapa):
-    # Genera sucesores válidos desde un estado actual
-    sucesores = []
-    movimientos = [(-1,0), (1,0), (0,-1), (0,1), (0,0)]
+    for i in range(1, num_aviones + 1):
+        inicio, objetivo = lineas[i].strip().split()
+        posiciones_iniciales.append(tuple(map(int, inicio.strip('()').split(','))))
+        posiciones_objetivo.append(tuple(map(int, objetivo.strip('()').split(','))))
 
-    for acciones in product(movimientos, repeat=len(estado)):   # Generamos todas las combinaciones posibles gracias a product
-        nuevo_estado = [(x +dx, y +dy) for (x,y), (dx,dy) in zip(estado, acciones)]     #Estamos creando el nuevo estado para cada avion
-        if es_valido(nuevo_estado, estado, acciones, mapa):
-            sucesores.append(tuple(nuevo_estado))
-    
-    return sucesores
+    mapa = [linea.strip().split(';') for linea in lineas[num_aviones + 1:]]
+    return num_aviones, posiciones_iniciales, posiciones_objetivo, mapa
 
+def celda_transitable(mapa, x, y):
+    filas, columnas = len(mapa), len(mapa[0])
+    return 0 <= x < filas and 0 <= y < columnas and mapa[x][y] != 'G'
 
-def es_valido(nuevo_estado, estado_actual, acciones, mapa):
-    # Verifica si un estado es válido: sin colisiones, sin cruces, movimientos dentro de límites.
-    posiciones_ocupadas = set()
+def generar_sucesores(mapa, posiciones):
+    direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
+    sucesores_por_avion = []
 
-    for (nx, ny), (dx, dy) in zip(nuevo_estado, acciones):
-        # Validar si la posición está dentro del mapa y no es gris
-        if not (0 <= nx < len(mapa) and 0 <= ny < len(mapa[0])) or mapa[nx][ny] == 'G':
-            return False  # Movimiento fuera de límites o celda bloqueada
-        
-        # No esperar en amarillo
-        if mapa[nx][ny] == 'A' and (dx, dy) == (0, 0):
-            return False  # Esperar en amarillo no permitido
+    for posicion in posiciones:
+        x, y = posicion
+        sucesores = []
+        for mov, (dx, dy) in direcciones.items():
+            nx, ny = x + dx, y + dy
+            if mov == 'W' and mapa[x][y] == 'A':
+                continue
+            if celda_transitable(mapa, nx, ny):
+                sucesores.append(((nx, ny), mov))
+        sucesores_por_avion.append(sucesores)
 
-        # Detectar colisiones (dos aviones en la misma celda)
-        if (nx, ny) in posiciones_ocupadas:
-            return False
-        posiciones_ocupadas.add((nx, ny))
+    combinaciones = list(product(*sucesores_por_avion))
+    sucesores_validos = [
+        comb for comb in combinaciones if movimientos_validos(comb, posiciones)
+    ]
+    return sucesores_validos
 
-    # Verificar cruces simultáneos
-    return not cruces_simultaneos(estado_actual, acciones)
+def movimientos_validos(movimientos, posiciones_iniciales):
+    posiciones_finales = [mov[0] for mov in movimientos]
+    if len(posiciones_finales) != len(set(posiciones_finales)):
+        return False
+    for i, pos_final in enumerate(posiciones_finales):
+        for j, pos_inicial in enumerate(posiciones_iniciales):
+            if i != j and pos_final == posiciones_iniciales[j] and posiciones_finales[j] == posiciones_iniciales[i]:
+                return False
+    return True
 
+def heuristica_manhattan(posiciones, objetivos):
+    return sum(
+        abs(pos[0] - obj[0]) + abs(pos[1] - obj[1]) for pos, obj in zip(posiciones, objetivos)
+    )
 
-def cruces_simultaneos(estado, acciones):
-    # Verifica si hay cruces simultáneos entre celdas adyacentes.
+def heuristica_euclidiana(posiciones, objetivos):
+    return sum(
+        abs(pos[0] - obj[0]) * abs(pos[1] - obj[1]) for pos, obj in zip(posiciones, objetivos)
+    )
 
-    movimientos = {
-        (x, y): (x + dx, y + dy)
-        for (x, y), (dx, dy) in zip(estado, acciones)
-    }
+def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
+    lista_abierta = []
+    heapq.heappush(lista_abierta, (0 + heuristica(posiciones_iniciales, posiciones_objetivo), 0, posiciones_iniciales, []))
+    conjunto_cerrado = set()
+    nodos_expandidos = 0
 
-    for (origen1, destino1), (origen2, destino2) in product(movimientos.items(), repeat=2):
-        if origen1 != origen2 and destino1 == origen2 and destino2 == origen1:
-            return True  # Cruce simultáneo detectado
-    return False
+    while lista_abierta:
+        _, g, posiciones, movimientos = heapq.heappop(lista_abierta)
 
+        if posiciones == posiciones_objetivo:
+            return movimientos, nodos_expandidos
 
-def heuristica_manhattan(estado, objetivos):
-    # Calcula la distancia Manhattan desde el estado actual a los objetivos
-    return sum(abs(x - gx) + abs(y - gy) for (x, y), (gx, gy) in zip(estado, objetivos))
+        if tuple(posiciones) in conjunto_cerrado:
+            continue
+        conjunto_cerrado.add(tuple(posiciones))
+        nodos_expandidos += 1
 
-def heuristica_2():
-    pass
+        sucesores = generar_sucesores(mapa, posiciones)
+        for sucesor in sucesores:
+            nuevas_posiciones = [s[0] for s in sucesor]
+            accion = [s[1] for s in sucesor]
+            nuevo_g = g + 1
+            h = heuristica(nuevas_posiciones, posiciones_objetivo)
+            heapq.heappush(lista_abierta, (nuevo_g + h, nuevo_g, nuevas_posiciones, movimientos + [accion]))
 
-def a_estrella(estado_inicial, objetivos, mapa, metodo = int(sys.argv[2])):
-    #Implementamos el algoritmo A* para encontrar el camino óptimo
-    if metodo == 1:
-        heuristica = heuristica_manhattan
-    elif metodo == 2:
-        heuristica = heuristica_2
-    else:
-        print("Error: numero de heuristica incorrecto: 1 o 2")
+    return None, nodos_expandidos
+
+def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida):
+    direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
+    salida = ""
+
+    for avion in range(len(posiciones_iniciales)):
+        x, y = posiciones_iniciales[avion]
+        linea = f"{posiciones_iniciales[avion]}"
+        for mov in movimientos:
+            operando = direcciones[mov[avion]]
+            x += operando[0]
+            y += operando[1]
+            linea += f" {mov[avion]} {(x, y)}"
+        salida += f"{linea}\n"
+
+    output_file = os.path.join(directorio_salida, f"{nombre_mapa}.output")
+    with open(output_file, "w") as f:
+        f.write(salida)
+
+def guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica_inicial, nodos_expandidos, directorio_salida):
+    stat_file = os.path.join(directorio_salida, f"{nombre_mapa}.stat")
+    with open(stat_file, "w") as f:
+        f.write(f"Tiempo total: {tiempo_total:.6f}s\n")
+        f.write(f"Makespan: {len(movimientos)}\n")
+        f.write(f"h inicial: {heuristica_inicial}\n")
+        f.write(f"Nodos expandidos: {nodos_expandidos}\n")
+
+def main():
+    if len(sys.argv) != 3:
+        print("Uso: python ASTARRodaje.py <path mapa.csv> <h_num>")
         sys.exit(1)
 
-    abiertos = []  # Cola de prioridad para estados abiertos
-    heapq.heappush(abiertos, (0, estado_inicial))  # Inicializamos con f=0
-    g_cost = {estado_inicial: 0}  # Costo g(n) para cada estado
-    padres = {estado_inicial: None}  # Guarda el camino (padres de cada estado)
-    visitados = set()  # Estados ya visitados
-    
-    while abiertos:
-        # Sacamos el nodo con el menor f(n)
-        f_actual, estado_actual = heapq.heappop(abiertos)
-        
-        # Verificar si hemos alcanzado el estado objetivo
-        if estado_actual == tuple(objetivos):
-            print("todo correcto")
-            return reconstruir_camino(padres, estado_actual), g_cost[estado_actual]
-        
-        if estado_actual in visitados:
-            continue
-        visitados.add(estado_actual)
+    ruta_mapa = sys.argv[1]
+    h_num = int(sys.argv[2])
 
-        # Generar sucesores
-        sucesores = generar_sucesores(estado_actual, mapa)
-        for sucesor in sucesores:
-            g_nuevo = g_cost[estado_actual] + 1  # Costo de moverse al sucesor (1 por movimiento)
+    nombre_mapa = os.path.basename(ruta_mapa).split('.')[0]
+    directorio_salida = "outputs"
+    if not os.path.exists(directorio_salida):
+        os.makedirs(directorio_salida)
 
-            # Si el sucesor es nuevo o encontramos un mejor camino
-            if sucesor not in g_cost or g_nuevo < g_cost[sucesor]:
-                g_cost[sucesor] = g_nuevo
-                f_nuevo = g_nuevo + heuristica(sucesor, objetivos)
-                heapq.heappush(abiertos, (f_nuevo, sucesor))
-                padres[sucesor] = estado_actual  # Guardar el padre del sucesor
-    
-    return None, None  # Si no se encuentra solución
+    num_aviones, posiciones_iniciales, posiciones_objetivo, mapa = leer_mapa(ruta_mapa)
 
-def reconstruir_camino(padres, estado_final):
-    # Reconstruir el camino desde el estado inicial al objetivo
-    camino = []
-    estado = estado_final
-    while estado:
-        camino.append(estado)
-        estado = padres[estado]
-    return camino[::-1]  # Devolvemos el camino en orden correcto
+    if h_num == 1:
+        heuristica = heuristica_manhattan
+    elif h_num == 2:
+        heuristica = heuristica_euclidiana
+    else:
+        print("Error: h_num debe ser 1 (Manhattan) o 2 (Logística)")
+        sys.exit(1)
 
+    inicio = time.time()
+    movimientos, nodos_expandidos = a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica)
+    tiempo_total = time.time() - inicio
 
-def guardar_solucion(solucion, nombre_archivo):
-    # Guardar la solución en un archivo de salida
-    pass
+    if movimientos is not None:
+        guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida)
+        guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica(posiciones_iniciales, posiciones_objetivo), nodos_expandidos, directorio_salida)
+    else:
+        print("No se encontró solución.")
 
-def guardar_estadisticas(tiempo, makespan, heuristica, nodos_expandidos, nombre_archivo):
-    # Guardar estadísticas en un archivo .stat
-    pass
-
-mapa, inicio, fin = leer_mapa()
-a_estrella(tuple(inicio), tuple(fin), mapa)
+if __name__ == "__main__":
+    main()
