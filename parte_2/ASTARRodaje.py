@@ -31,17 +31,18 @@ def generar_sucesores(mapa, posiciones):
     direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
     sucesores_por_avion = []
 
-    for posicion in posiciones:
+    for posicion in posiciones: # Generar sucesores por avión
         x, y = posicion
         sucesores = []
         for mov, (dx, dy) in direcciones.items():
-            nx, ny = x + dx, y + dy
-            if mov == 'W' and mapa[x][y] == 'A':
+            nx, ny = x + dx, y + dy 
+            if mov == 'W' and mapa[x][y] == 'A': 
                 continue
             if celda_transitable(mapa, nx, ny):
                 sucesores.append(((nx, ny), mov))
         sucesores_por_avion.append(sucesores)
 
+    # Generar todas las combinaciones de sucesores
     combinaciones = list(product(*sucesores_por_avion))
     sucesores_validos = [
         comb for comb in combinaciones if movimientos_validos(comb, posiciones)
@@ -53,6 +54,7 @@ def movimientos_validos(movimientos, posiciones_iniciales):
     posiciones_finales = [mov[0] for mov in movimientos]
     if len(posiciones_finales) != len(set(posiciones_finales)):
         return False
+    # Verificar si hay colisiones
     for i, pos_final in enumerate(posiciones_finales):
         for j, pos_inicial in enumerate(posiciones_iniciales):
             if i != j and pos_final == posiciones_iniciales[j] and posiciones_finales[j] == posiciones_iniciales[i]:
@@ -83,12 +85,13 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
         if posiciones == posiciones_objetivo: # Solución encontrada
             return movimientos, nodos_expandidos
 
+        # Verificar si el estado ya ha sido expandido
         if tuple(posiciones) in conjunto_cerrado:
             continue
         conjunto_cerrado.add(tuple(posiciones))
         nodos_expandidos += 1
 
-        # Generar sucesores
+        # Generar sucesores y agregarlos a la lista abierta
         sucesores = generar_sucesores(mapa, posiciones)
         for sucesor in sucesores:
             nuevas_posiciones = [s[0] for s in sucesor]
@@ -141,6 +144,7 @@ def main():
 
     num_aviones, posiciones_iniciales, posiciones_objetivo, mapa = leer_mapa(ruta_mapa)
 
+    # Seleccionar heurística
     if h_num == 1:
         heuristica = heuristica_manhattan
     elif h_num == 2:
