@@ -7,7 +7,7 @@ input_dir="CSP-tests"
 tests=(
     "01_2x2-2fr.txt"
     "02_3x3-3fr.txt"
-    "03_5x5-5fr.txt"
+    "03_4x4-2fr.txt"
     "04_3x3-4fr.txt"
     "05_5x5-4fr.txt"
     "06_1x3-2-2.txt"
