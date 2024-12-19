@@ -1,0 +1,7 @@
+Franjas:2
+1x3
+STD:(0,0) 
+SPC: (0,2)
+PRK:(0,1)  
+1-JMB-F-1-0
+2-JMB-T-1-1
