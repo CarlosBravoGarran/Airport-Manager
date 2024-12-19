@@ -92,7 +92,7 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
 
     return None, nodos_expandidos
 
-def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida):
+def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida, h_num):
     direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
     salida = ""
 
@@ -106,12 +106,12 @@ def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_sa
             linea += f" {mov[avion]} {(x, y)}"
         salida += f"{linea}\n"
 
-    output_file = os.path.join(directorio_salida, f"{nombre_mapa}.output")
+    output_file = os.path.join(directorio_salida, f"{nombre_mapa}-{h_num}.output")
     with open(output_file, "w") as f:
         f.write(salida)
 
-def guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica_inicial, nodos_expandidos, directorio_salida):
-    stat_file = os.path.join(directorio_salida, f"{nombre_mapa}.stat")
+def guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica_inicial, nodos_expandidos, directorio_salida, h_num):
+    stat_file = os.path.join(directorio_salida, f"{nombre_mapa}-{h_num}.stat")
     with open(stat_file, "w") as f:
         f.write(f"Tiempo total: {tiempo_total:.6f}s\n")
         f.write(f"Makespan: {len(movimientos)}\n")
@@ -127,7 +127,7 @@ def main():
     h_num = int(sys.argv[2])
 
     nombre_mapa = os.path.basename(ruta_mapa).split('.')[0]
-    directorio_salida = "outputs"
+    directorio_salida = "ASTAR-solutions"
     if not os.path.exists(directorio_salida):
         os.makedirs(directorio_salida)
 
@@ -138,7 +138,7 @@ def main():
     elif h_num == 2:
         heuristica = heuristica_euclidiana
     else:
-        print("Error: h_num debe ser 1 (Manhattan) o 2 (Logística)")
+        print("Error: h_num debe ser 1 (Manhattan) o 2 (Euclidiana).")
         sys.exit(1)
 
     inicio = time.time()
@@ -146,10 +146,11 @@ def main():
     tiempo_total = time.time() - inicio
 
     if movimientos is not None:
-        guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida)
-        guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica(posiciones_iniciales, posiciones_objetivo), nodos_expandidos, directorio_salida)
+        guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida, h_num)
+        guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica(posiciones_iniciales, posiciones_objetivo), nodos_expandidos, directorio_salida, h_num)
     else:
         print("No se encontró solución.")
+
 
 if __name__ == "__main__":
     main()
