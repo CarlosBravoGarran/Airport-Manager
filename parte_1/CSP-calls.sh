@@ -19,9 +19,6 @@ tests=(
     "12_t2>fr.txt"
 )
 
-# Crear directorio solutions si no existe
-mkdir -p solutions
-
 # Ejecutar cada prueba
 for test_file in "${tests[@]}"; do
     echo "Ejecutando prueba: $test_file"
