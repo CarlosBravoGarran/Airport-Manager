@@ -81,7 +81,7 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
     nodos_expandidos = 0
 
     while lista_abierta:
-        _, g, posiciones, movimientos = heapq.heappop(lista_abierta)
+        _, g, posiciones, movimientos = heapq.heappop(lista_abierta) 
         if posiciones == posiciones_objetivo: # Solución encontrada
             return movimientos, nodos_expandidos
 
@@ -96,9 +96,9 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
         for sucesor in sucesores:
             nuevas_posiciones = [s[0] for s in sucesor]
             accion = [s[1] for s in sucesor]
-            nuevo_g = g + 1
+            nuevo_g = g + 1 # Costo uniforme de 1 por movimiento 
             h = heuristica(nuevas_posiciones, posiciones_objetivo)
-            heapq.heappush(lista_abierta, (nuevo_g + h, nuevo_g, nuevas_posiciones, movimientos + [accion]))
+            heapq.heappush(lista_abierta, (nuevo_g + h, nuevo_g, nuevas_posiciones, movimientos + [accion])) # f = g + h 
 
     return None, nodos_expandidos
 
