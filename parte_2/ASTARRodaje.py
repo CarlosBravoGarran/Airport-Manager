@@ -4,6 +4,7 @@ import os
 import time
 from itertools import product
 
+# Leer el archivo de entrada
 def leer_mapa(archivo):
     with open(archivo, 'r') as f:
         lineas = f.readlines()
@@ -20,10 +21,12 @@ def leer_mapa(archivo):
     mapa = [linea.strip().split(';') for linea in lineas[num_aviones + 1:]]
     return num_aviones, posiciones_iniciales, posiciones_objetivo, mapa
 
+# Verificar si una celda es transitable
 def celda_transitable(mapa, x, y):
     filas, columnas = len(mapa), len(mapa[0])
     return 0 <= x < filas and 0 <= y < columnas and mapa[x][y] != 'G'
 
+# Generar los sucesores de un estado
 def generar_sucesores(mapa, posiciones):
     direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
     sucesores_por_avion = []
@@ -45,6 +48,7 @@ def generar_sucesores(mapa, posiciones):
     ]
     return sucesores_validos
 
+# Verificar si los movimientos son válidos
 def movimientos_validos(movimientos, posiciones_iniciales):
     posiciones_finales = [mov[0] for mov in movimientos]
     if len(posiciones_finales) != len(set(posiciones_finales)):
@@ -55,16 +59,19 @@ def movimientos_validos(movimientos, posiciones_iniciales):
                 return False
     return True
 
+# Heurística de Manhattan
 def heuristica_manhattan(posiciones, objetivos):
     return sum(
         abs(pos[0] - obj[0]) + abs(pos[1] - obj[1]) for pos, obj in zip(posiciones, objetivos)
     )
 
+# Heurística distancia Euclidiana
 def heuristica_euclidiana(posiciones, objetivos):
     return sum(
-        abs(pos[0] - obj[0]) * abs(pos[1] - obj[1]) for pos, obj in zip(posiciones, objetivos)
+        ((pos[0] - obj[0])**2 + (pos[1] - obj[1])**2)**0.5 for pos, obj in zip(posiciones, objetivos)
     )
 
+# Algoritmo A*
 def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
     lista_abierta = []
     heapq.heappush(lista_abierta, (0 + heuristica(posiciones_iniciales, posiciones_objetivo), 0, posiciones_iniciales, []))
@@ -73,8 +80,7 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
 
     while lista_abierta:
         _, g, posiciones, movimientos = heapq.heappop(lista_abierta)
-
-        if posiciones == posiciones_objetivo:
+        if posiciones == posiciones_objetivo: # Solución encontrada
             return movimientos, nodos_expandidos
 
         if tuple(posiciones) in conjunto_cerrado:
@@ -82,6 +88,7 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
         conjunto_cerrado.add(tuple(posiciones))
         nodos_expandidos += 1
 
+        # Generar sucesores
         sucesores = generar_sucesores(mapa, posiciones)
         for sucesor in sucesores:
             nuevas_posiciones = [s[0] for s in sucesor]
@@ -92,6 +99,7 @@ def a_star(mapa, posiciones_iniciales, posiciones_objetivo, heuristica):
 
     return None, nodos_expandidos
 
+# Guardar el output
 def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_salida, h_num):
     direcciones = {'↑': (-1, 0), '↓': (1, 0), '←': (0, -1), '→': (0, 1), 'W': (0, 0)}
     salida = ""
@@ -106,18 +114,20 @@ def guardar_output(nombre_mapa, movimientos, posiciones_iniciales, directorio_sa
             linea += f" {mov[avion]} {(x, y)}"
         salida += f"{linea}\n"
 
-    output_file = os.path.join(directorio_salida, f"{nombre_mapa}-{h_num}.output")
+    output_file = f"{directorio_salida}/{nombre_mapa}-{h_num}.output"
     with open(output_file, "w") as f:
         f.write(salida)
 
+# Guardar las estadísticas
 def guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica_inicial, nodos_expandidos, directorio_salida, h_num):
-    stat_file = os.path.join(directorio_salida, f"{nombre_mapa}-{h_num}.stat")
+    stat_file = f"{directorio_salida}/{nombre_mapa}-{h_num}.stat"
     with open(stat_file, "w") as f:
         f.write(f"Tiempo total: {tiempo_total:.6f}s\n")
         f.write(f"Makespan: {len(movimientos)}\n")
         f.write(f"h inicial: {heuristica_inicial}\n")
         f.write(f"Nodos expandidos: {nodos_expandidos}\n")
 
+# Función principal
 def main():
     if len(sys.argv) != 3:
         print("Uso: python ASTARRodaje.py <path mapa.csv> <h_num>")
@@ -127,9 +137,7 @@ def main():
     h_num = int(sys.argv[2])
 
     nombre_mapa = os.path.basename(ruta_mapa).split('.')[0]
-    directorio_salida = "ASTAR-solutions"
-    if not os.path.exists(directorio_salida):
-        os.makedirs(directorio_salida)
+    directorio_salida = os.path.dirname(ruta_mapa)
 
     num_aviones, posiciones_iniciales, posiciones_objetivo, mapa = leer_mapa(ruta_mapa)
 
@@ -150,7 +158,6 @@ def main():
         guardar_estadisticas(nombre_mapa, tiempo_total, movimientos, heuristica(posiciones_iniciales, posiciones_objetivo), nodos_expandidos, directorio_salida, h_num)
     else:
         print("No se encontró solución.")
-
 
 if __name__ == "__main__":
     main()
