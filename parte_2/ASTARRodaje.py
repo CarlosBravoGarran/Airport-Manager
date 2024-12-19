@@ -65,8 +65,8 @@ def heuristica_manhattan(posiciones, objetivos):
         abs(pos[0] - obj[0]) + abs(pos[1] - obj[1]) for pos, obj in zip(posiciones, objetivos)
     )
 
-# Heurística distancia Euclidiana
-def heuristica_euclidiana(posiciones, objetivos):
+# Heurística distancia Euclidea
+def heuristica_euclidea(posiciones, objetivos):
     return sum(
         ((pos[0] - obj[0])**2 + (pos[1] - obj[1])**2)**0.5 for pos, obj in zip(posiciones, objetivos)
     )
@@ -144,9 +144,9 @@ def main():
     if h_num == 1:
         heuristica = heuristica_manhattan
     elif h_num == 2:
-        heuristica = heuristica_euclidiana
+        heuristica = heuristica_euclidea
     else:
-        print("Error: h_num debe ser 1 (Manhattan) o 2 (Euclidiana).")
+        print("Error: h_num debe ser 1 (Manhattan) o 2 (Euclidea).")
         sys.exit(1)
 
     inicio = time.time()
