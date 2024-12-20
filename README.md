@@ -21,15 +21,15 @@ Both problems are solved using Python, with optimized models and heuristic techn
 
 ```
 .
-├── Plane_Maintenance/                 # Scripts and data for the maintenance problem
-│   ├── CSPMaintenance.py   # Python solution for the maintenance problem
-│   ├── CSP-calls.sh        # Script to automate test case execution
-│   └── CSP-tests/          # Directory containing input files for test cases
-├── Plane_Taxiing/                 # Scripts and data for the taxi planning problem
-│   ├── ASTARRodaje.py      # Python solution for the taxi planning problem
-│   ├── ASTAR-calls.sh      # Script to automate test case execution
+├── Plane_Maintenance/     # Scripts and data for the maintenance problem
+│   ├── CSPMaintenance.py  # Python solution for the maintenance problem
+│   ├── CSP-calls.sh       # Script to automate test case execution
+│   └── CSP-tests/         # Directory containing input files for test cases
+├── Plane_Taxiing/         # Scripts and data for the taxi planning problem
+│   ├── ASTARRodaje.py     # Python solution for the taxi planning problem
+│   ├── ASTAR-calls.sh     # Script to automate test case execution
 │   └── ASTAR-tests/       # Directory containing input files for test cases
-└── README.md               # This file
+└── README.md              # This file
 ```
 
 ---
