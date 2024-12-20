@@ -119,4 +119,3 @@ Both problems are solved using Python, with optimized models and heuristic techn
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-```
